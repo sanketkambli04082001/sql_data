@@ -1,0 +1,459 @@
+Microsoft Windows [Version 10.0.19045.4046]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p -h localhost
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 21
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db                 |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sanket             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use sanket;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_sanket |
++------------------+
+| employee         |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> desc employee;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| gov_id | bigint      | NO   |     | NULL    |       |
+| id     | int         | NO   | PRI | NULL    |       |
+| F_Name | varchar(20) | NO   |     | NULL    |       |
+| L_Name | varchar(20) | YES  |     | NULL    |       |
+| age    | int         | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employee drop age;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| gov_id | bigint      | NO   |     | NULL    |       |
+| id     | int         | NO   | PRI | NULL    |       |
+| F_Name | varchar(20) | NO   |     | NULL    |       |
+| L_Name | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table employee add column age int not null;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| gov_id | bigint      | NO   |     | NULL    |       |
+| id     | int         | NO   | PRI | NULL    |       |
+| F_Name | varchar(20) | NO   |     | NULL    |       |
+| L_Name | varchar(20) | YES  |     | NULL    |       |
+| age    | int         | NO   |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee
+    -> ;
+Empty set (0.00 sec)
+
+mysql> select * ;
+ERROR 1096 (HY000): No tables used
+mysql> drop table employee;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table student;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table student (roll_no int,f_name varchar(50) not null,l_name varchar(50),contact int unique);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | YES  |     | NULL    |       |
+| f_name  | varchar(50) | NO   |     | NULL    |       |
+| l_name  | varchar(50) | YES  |     | NULL    |       |
+| contact | int         | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student add primary key(roll_no);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| f_name  | varchar(50) | NO   |     | NULL    |       |
+| l_name  | varchar(50) | YES  |     | NULL    |       |
+| contact | int         | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table employee modify column roll_no int not null;
+ERROR 1146 (42S02): Table 'sanket.employee' doesn't exist
+mysql> alter table student modify column roll_no int not null;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| f_name  | varchar(50) | NO   |     | NULL    |       |
+| l_name  | varchar(50) | YES  |     | NULL    |       |
+| contact | int         | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student modify column l_name varchar(30) not null;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| f_name  | varchar(50) | NO   |     | NULL    |       |
+| l_name  | varchar(30) | NO   |     | NULL    |       |
+| contact | int         | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student values(1,"sanket","kambli",8378822559);
+ERROR 1264 (22003): Out of range value for column 'contact' at row 1
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| f_name  | varchar(50) | NO   |     | NULL    |       |
+| l_name  | varchar(30) | NO   |     | NULL    |       |
+| contact | int         | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> alter table student modify column contach bigint unique;
+ERROR 1054 (42S22): Unknown column 'contach' in 'student'
+mysql> alter table student modify column contact bigint unique;
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| f_name  | varchar(50) | NO   |     | NULL    |       |
+| l_name  | varchar(30) | NO   |     | NULL    |       |
+| contact | bigint      | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student values(1,"sanket","kambli",8378822559);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++---------+--------+--------+------------+
+| roll_no | f_name | l_name | contact    |
++---------+--------+--------+------------+
+|       1 | sanket | kambli | 8378822559 |
++---------+--------+--------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into student values(2,"krushna","jadhav",9875687569);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(3,"Rajit","nair",9483746489);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(4,"Sanket","Chaskar",8475839485);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(5,"abc","nhd",9484736478);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(6,"hfhf","fhfjfj",9403948573):
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+mysql> insert into student values(6,"hfhf","fhfjfj",9403948573);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(7,"sfdhsfj","fduhfudhfuh",9757384748);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(8,"ssuf","sfhsfhf",0987654323);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(9,"sfhsfoh","sfhff",8765456789);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(10,"sfj","foif",9876567890);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++---------+---------+-------------+------------+
+| roll_no | f_name  | l_name      | contact    |
++---------+---------+-------------+------------+
+|       1 | sanket  | kambli      | 8378822559 |
+|       2 | krushna | jadhav      | 9875687569 |
+|       3 | Rajit   | nair        | 9483746489 |
+|       4 | Sanket  | Chaskar     | 8475839485 |
+|       5 | abc     | nhd         | 9484736478 |
+|       6 | hfhf    | fhfjfj      | 9403948573 |
+|       7 | sfdhsfj | fduhfudhfuh | 9757384748 |
+|       8 | ssuf    | sfhsfhf     |  987654323 |
+|       9 | sfhsfoh | sfhff       | 8765456789 |
+|      10 | sfj     | foif        | 9876567890 |
++---------+---------+-------------+------------+
+10 rows in set (0.00 sec)
+
+mysql> insert into student values(11,"dasd",'sfaf',8778898789);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(12,'fihsf','sdsada',9898989898),(13,'jfjfkf','dsad',0909090909);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+---------+-------------+------------+
+| roll_no | f_name  | l_name      | contact    |
++---------+---------+-------------+------------+
+|       1 | sanket  | kambli      | 8378822559 |
+|       2 | krushna | jadhav      | 9875687569 |
+|       3 | Rajit   | nair        | 9483746489 |
+|       4 | Sanket  | Chaskar     | 8475839485 |
+|       5 | abc     | nhd         | 9484736478 |
+|       6 | hfhf    | fhfjfj      | 9403948573 |
+|       7 | sfdhsfj | fduhfudhfuh | 9757384748 |
+|       8 | ssuf    | sfhsfhf     |  987654323 |
+|       9 | sfhsfoh | sfhff       | 8765456789 |
+|      10 | sfj     | foif        | 9876567890 |
+|      11 | dasd    | sfaf        | 8778898789 |
+|      12 | fihsf   | sdsada      | 9898989898 |
+|      13 | jfjfkf  | dsad        |  909090909 |
++---------+---------+-------------+------------+
+13 rows in set (0.00 sec)
+
+mysql> truncate table student;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| f_name  | varchar(50) | NO   |     | NULL    |       |
+| l_name  | varchar(30) | NO   |     | NULL    |       |
+| contact | bigint      | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> insert into student values (1,"sanket",'kamble',9999999999),(2,'abscd','sdsdf',9898989898);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+--------+--------+------------+
+| roll_no | f_name | l_name | contact    |
++---------+--------+--------+------------+
+|       1 | sanket | kamble | 9999999999 |
+|       2 | abscd  | sdsdf  | 9898989898 |
++---------+--------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> update student set l_name = 'kambli' where roll_no = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+--------+--------+------------+
+| roll_no | f_name | l_name | contact    |
++---------+--------+--------+------------+
+|       1 | sanket | kambli | 9999999999 |
+|       2 | abscd  | sdsdf  | 9898989898 |
++---------+--------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> update student (set contact = 8378822559 where roll_no = 1),(set f_name = 'ggggg' where roll_no = 2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(set contact = 8378822559 where roll_no = 1),(set f_name = 'ggggg' where roll_no' at line 1
+mysql> update student set l_name = 'fasff',contact = 8378822559 where roll_no = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+--------+--------+------------+
+| roll_no | f_name | l_name | contact    |
++---------+--------+--------+------------+
+|       1 | sanket | fasff  | 8378822559 |
+|       2 | abscd  | sdsdf  | 9898989898 |
++---------+--------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table student add column city varchar(20) default 'Mumbai';
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+--------+--------+------------+--------+
+| roll_no | f_name | l_name | contact    | city   |
++---------+--------+--------+------------+--------+
+|       1 | sanket | fasff  | 8378822559 | Mumbai |
+|       2 | abscd  | sdsdf  | 9898989898 | Mumbai |
++---------+--------+--------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into student values(3,"sdsad","sdada",9898989898);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student values(3,"sdsad","sdada",9898989898,default);
+ERROR 1062 (23000): Duplicate entry '9898989898' for key 'student.contact'
+mysql> insert into student values(3,"sdsad","sdada",9898989898,default);
+ERROR 1062 (23000): Duplicate entry '9898989898' for key 'student.contact'
+mysql> insert into student values(3,"sdsad","sdada",9898989988,default);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> truncate student;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| f_name  | varchar(50) | NO   |     | NULL    |       |
+| l_name  | varchar(30) | NO   |     | NULL    |       |
+| contact | bigint      | YES  | UNI | NULL    |       |
+| city    | varchar(20) | YES  |     | Mumbai  |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student auto_increment = 1;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| roll_no | int         | NO   | PRI | NULL    |       |
+| f_name  | varchar(50) | NO   |     | NULL    |       |
+| l_name  | varchar(30) | NO   |     | NULL    |       |
+| contact | bigint      | YES  | UNI | NULL    |       |
+| city    | varchar(20) | YES  |     | Mumbai  |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student modify column roll_no int primary key auto inrecement;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto inrecement' at line 1
+mysql> alter table student modify column roll_no int primary key auto_inrecement;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_inrecement' at line 1
+mysql> alter table student modify roll_no int primary key auto_inrecement;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'auto_inrecement' at line 1
+mysql> alter table student modify roll_no int auto_increment;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| roll_no | int         | NO   | PRI | NULL    | auto_increment |
+| f_name  | varchar(50) | NO   |     | NULL    |                |
+| l_name  | varchar(30) | NO   |     | NULL    |                |
+| contact | bigint      | YES  | UNI | NULL    |                |
+| city    | varchar(20) | YES  |     | Mumbai  |                |
++---------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student (f_name,l_name,contact) values ('sanket','kambli',8378822559),('krushna','jadhav',8787878787);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| roll_no | int         | NO   | PRI | NULL    | auto_increment |
+| f_name  | varchar(50) | NO   |     | NULL    |                |
+| l_name  | varchar(30) | NO   |     | NULL    |                |
+| contact | bigint      | YES  | UNI | NULL    |                |
+| city    | varchar(20) | YES  |     | Mumbai  |                |
++---------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++---------+---------+--------+------------+--------+
+| roll_no | f_name  | l_name | contact    | city   |
++---------+---------+--------+------------+--------+
+|       1 | sanket  | kambli | 8378822559 | Mumbai |
+|       2 | krushna | jadhav | 8787878787 | Mumbai |
++---------+---------+--------+------------+--------+
+2 rows in set (0.00 sec)
+
+mysql> alter table student auto_increment = 100;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into student (f_name,l_name,contact) values ('sanket','kambli',8878822559),('krushna','jadhav',878787878766
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into student (f_name,l_name,contact) values ('sanket','kambli',8878822559),('krushna','jadhav',87878787876);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+---------+--------+-------------+--------+
+| roll_no | f_name  | l_name | contact     | city   |
++---------+---------+--------+-------------+--------+
+|       1 | sanket  | kambli |  8378822559 | Mumbai |
+|       2 | krushna | jadhav |  8787878787 | Mumbai |
+|     100 | sanket  | kambli |  8878822559 | Mumbai |
+|     101 | krushna | jadhav | 87878787876 | Mumbai |
++---------+---------+--------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql>
