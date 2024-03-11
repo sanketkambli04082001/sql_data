@@ -1,0 +1,333 @@
+Microsoft Windows [Version 10.0.19045.4046]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p -h localhost
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db                 |
+| information_schema |
+| minal              |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sanket             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.06 sec)
+
+mysql> use sanket;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_sanket |
++------------------+
+| student          |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> create table employee;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table employee(id int primary key auto_increment, name varchar(20) not null,department varchar(30) , marks float not null, paid_fees int not null,attendance int not null);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc employee;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int         | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(20) | NO   |     | NULL    |                |
+| department | varchar(30) | YES  |     | NULL    |                |
+| marks      | float       | NO   |     | NULL    |                |
+| paid_fees  | int         | NO   |     | NULL    |                |
+| attendance | int         | NO   |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> insert into employee(name,department,marks,paid_fees,attendance) values ('a','it',30,100000,100),('b','mech',80,100000,90),('c','extc',90,200000,65),('d','it',60,250000,90),('e','comps',86,300000,75),('f','comps',10,300000,10),('g','it',56.12,300000,90),('h','mech',79.79,400000,90),('i','extc',90,350000,76),('j','it',99.99,399999,0);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++----+------+------------+-------+-----------+------------+
+| id | name | department | marks | paid_fees | attendance |
++----+------+------------+-------+-----------+------------+
+|  1 | a    | it         |    30 |    100000 |        100 |
+|  2 | b    | mech       |    80 |    100000 |         90 |
+|  3 | c    | extc       |    90 |    200000 |         65 |
+|  4 | d    | it         |    60 |    250000 |         90 |
+|  5 | e    | comps      |    86 |    300000 |         75 |
+|  6 | f    | comps      |    10 |    300000 |         10 |
+|  7 | g    | it         | 56.12 |    300000 |         90 |
+|  8 | h    | mech       | 79.79 |    400000 |         90 |
+|  9 | i    | extc       |    90 |    350000 |         76 |
+| 10 | j    | it         | 99.99 |    399999 |          0 |
++----+------+------------+-------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> truncate table employee;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into employee(name,department,marks,paid_fees,attendance) values ('Sanket','it',90,100000,100),('Krushna','elec',80,100000,90),('rajit','it',90,200000,65),('salemon','it',60,250000,90),('bodybuilder','comps',86,300000,75),('Gojo','comps',10,300000,10),('Sukuna','it',56.12,300000,90),('naruto','mech',79.79,400000,90),('champk','extc',90,350000,76),('jethalal','it',99.99,399999,0);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  1 | Sanket      | it         |    90 |    100000 |        100 |
+|  2 | Krushna     | elec       |    80 |    100000 |         90 |
+|  3 | rajit       | it         |    90 |    200000 |         65 |
+|  4 | salemon     | it         |    60 |    250000 |         90 |
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
+|  7 | Sukuna      | it         | 56.12 |    300000 |         90 |
+|  8 | naruto      | mech       | 79.79 |    400000 |         90 |
+|  9 | champk      | extc       |    90 |    350000 |         76 |
+| 10 | jethalal    | it         | 99.99 |    399999 |          0 |
++----+-------------+------------+-------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from employee where name like 's____t'
+    -> ;
++----+--------+------------+-------+-----------+------------+
+| id | name   | department | marks | paid_fees | attendance |
++----+--------+------------+-------+-----------+------------+
+|  1 | Sanket | it         |    90 |    100000 |        100 |
++----+--------+------------+-------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where name like 's%'
+    -> ;
++----+---------+------------+-------+-----------+------------+
+| id | name    | department | marks | paid_fees | attendance |
++----+---------+------------+-------+-----------+------------+
+|  1 | Sanket  | it         |    90 |    100000 |        100 |
+|  4 | salemon | it         |    60 |    250000 |         90 |
+|  7 | Sukuna  | it         | 56.12 |    300000 |         90 |
++----+---------+------------+-------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employee where name like '%n';
++----+---------+------------+-------+-----------+------------+
+| id | name    | department | marks | paid_fees | attendance |
++----+---------+------------+-------+-----------+------------+
+|  4 | salemon | it         |    60 |    250000 |         90 |
++----+---------+------------+-------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where name like '___n%t';
+Empty set (0.00 sec)
+
+mysql> select * from employee where name like '__n%t';
++----+--------+------------+-------+-----------+------------+
+| id | name   | department | marks | paid_fees | attendance |
++----+--------+------------+-------+-----------+------------+
+|  1 | Sanket | it         |    90 |    100000 |        100 |
++----+--------+------------+-------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee limit 8;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  1 | Sanket      | it         |    90 |    100000 |        100 |
+|  2 | Krushna     | elec       |    80 |    100000 |         90 |
+|  3 | rajit       | it         |    90 |    200000 |         65 |
+|  4 | salemon     | it         |    60 |    250000 |         90 |
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
+|  7 | Sukuna      | it         | 56.12 |    300000 |         90 |
+|  8 | naruto      | mech       | 79.79 |    400000 |         90 |
++----+-------------+------------+-------+-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from employee limit 4;
++----+---------+------------+-------+-----------+------------+
+| id | name    | department | marks | paid_fees | attendance |
++----+---------+------------+-------+-----------+------------+
+|  1 | Sanket  | it         |    90 |    100000 |        100 |
+|  2 | Krushna | elec       |    80 |    100000 |         90 |
+|  3 | rajit   | it         |    90 |    200000 |         65 |
+|  4 | salemon | it         |    60 |    250000 |         90 |
++----+---------+------------+-------+-----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee limit 4,2;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
++----+-------------+------------+-------+-----------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee limit 4,10;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
+|  7 | Sukuna      | it         | 56.12 |    300000 |         90 |
+|  8 | naruto      | mech       | 79.79 |    400000 |         90 |
+|  9 | champk      | extc       |    90 |    350000 |         76 |
+| 10 | jethalal    | it         | 99.99 |    399999 |          0 |
++----+-------------+------------+-------+-----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee limit 4,6;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
+|  7 | Sukuna      | it         | 56.12 |    300000 |         90 |
+|  8 | naruto      | mech       | 79.79 |    400000 |         90 |
+|  9 | champk      | extc       |    90 |    350000 |         76 |
+| 10 | jethalal    | it         | 99.99 |    399999 |          0 |
++----+-------------+------------+-------+-----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from employee limit 1,9;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  2 | Krushna     | elec       |    80 |    100000 |         90 |
+|  3 | rajit       | it         |    90 |    200000 |         65 |
+|  4 | salemon     | it         |    60 |    250000 |         90 |
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
+|  7 | Sukuna      | it         | 56.12 |    300000 |         90 |
+|  8 | naruto      | mech       | 79.79 |    400000 |         90 |
+|  9 | champk      | extc       |    90 |    350000 |         76 |
+| 10 | jethalal    | it         | 99.99 |    399999 |          0 |
++----+-------------+------------+-------+-----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select distinct from employee order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employee order by desc' at line 1
+mysql> select distinct paid_fees from employee order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select distinct paid_fees from employee order by paid_fees desc;
++-----------+
+| paid_fees |
++-----------+
+|    400000 |
+|    399999 |
+|    350000 |
+|    300000 |
+|    250000 |
+|    200000 |
+|    100000 |
++-----------+
+7 rows in set (0.00 sec)
+
+mysql> select distinct paid_fees from employee order by paid_fees limit 5;
++-----------+
+| paid_fees |
++-----------+
+|    100000 |
+|    200000 |
+|    250000 |
+|    300000 |
+|    350000 |
++-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee order by desc limit 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc limit 5' at line 1
+mysql> select * from employee order by paid_fees desc limit 5;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  8 | naruto      | mech       | 79.79 |    400000 |         90 |
+| 10 | jethalal    | it         | 99.99 |    399999 |          0 |
+|  9 | champk      | extc       |    90 |    350000 |         76 |
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
++----+-------------+------------+-------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct from employee order by paid_fees limit 8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employee order by paid_fees limit 8' at line 1
+mysql> select distinct from employee order by paid_fees desc limit 8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employee order by paid_fees desc limit 8' at line 1
+mysql> select distinct * from employee order by paid_fees desc limit 8;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  8 | naruto      | mech       | 79.79 |    400000 |         90 |
+| 10 | jethalal    | it         | 99.99 |    399999 |          0 |
+|  9 | champk      | extc       |    90 |    350000 |         76 |
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
+|  7 | Sukuna      | it         | 56.12 |    300000 |         90 |
+|  4 | salemon     | it         |    60 |    250000 |         90 |
+|  3 | rajit       | it         |    90 |    200000 |         65 |
++----+-------------+------------+-------+-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select distinct paid_fees * from employee order by paid_fees desc limit 8;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employee order by paid_fees desc limit 8' at line 1
+mysql> select distinct paid_fees from employee order by paid_fees desc limit 8;
++-----------+
+| paid_fees |
++-----------+
+|    400000 |
+|    399999 |
+|    350000 |
+|    300000 |
+|    250000 |
+|    200000 |
+|    100000 |
++-----------+
+7 rows in set (0.00 sec)
+
+mysql> update employee set paid_fees = paid_fees+(paid_fees*0.15) where id = 3,8,4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',8,4' at line 1
+mysql> update employee set paid_fees = paid_fees+(paid_fees*0.15) where id in 3,8,4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3,8,4' at line 1
+mysql> update employee set paid_fees = paid_fees+(paid_fees*0.15) where id in (3,8,4);
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from employees;
+ERROR 1146 (42S02): Table 'sanket.employees' doesn't exist
+mysql> select * from employees;
+ERROR 1146 (42S02): Table 'sanket.employees' doesn't exist
+mysql> select * from employees;
+ERROR 1146 (42S02): Table 'sanket.employees' doesn't exist
+mysql> select * from employee;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  1 | Sanket      | it         |    90 |    100000 |        100 |
+|  2 | Krushna     | elec       |    80 |    100000 |         90 |
+|  3 | rajit       | it         |    90 |    230000 |         65 |
+|  4 | salemon     | it         |    60 |    287500 |         90 |
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
+|  7 | Sukuna      | it         | 56.12 |    300000 |         90 |
+|  8 | naruto      | mech       | 79.79 |    460000 |         90 |
+|  9 | champk      | extc       |    90 |    350000 |         76 |
+| 10 | jethalal    | it         | 99.99 |    399999 |          0 |
++----+-------------+------------+-------+-----------+------------+
+10 rows in set (0.00 sec)
+
+mysql>
