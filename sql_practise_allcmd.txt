@@ -1,0 +1,396 @@
+Microsoft Windows [Version 10.0.22631.3155]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p -h localhost;
+Enter password: ****
+ERROR 2005 (HY000): Unknown MySQL server host 'localhost;' (11001)
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p -h localhost
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.35 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sanket             |
+| sys                |
++--------------------+
+5 rows in set (0.09 sec)
+
+mysql> create database practise;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> use practise;
+Database changed
+mysql> show tables;
+Empty set (0.02 sec)
+
+mysql> create table student(id int primary key auto_increment,f_name varchar(20) not null,l_name varchar(30),contact bigint not null,age int default'18');
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int         | NO   | PRI | NULL    | auto_increment |
+| f_name  | varchar(20) | NO   |     | NULL    |                |
+| l_name  | varchar(30) | YES  |     | NULL    |                |
+| contact | bigint      | NO   |     | NULL    |                |
+| age     | int         | YES  |     | 18      |                |
++---------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> insert into student(f_name,l_name,contact,age) values ('a','b',1111111111),('c','d',2222222222,19),('e','f',3333333333),('g','h',4444444444),
+('i','j',5555555555);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student(f_name,l_name,contact,age) values ('a','b',1111111111),('c','d',2222222222,19),('e','f',3333333333),('g','h',4444444444),
+('i','j',5555555555,20);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into student(f_name,l_name,contact) values ('a','b',1111111111),('c','d',2222222222),('e','f',3333333333),('g','h',4444444444),('i','j
+',5555555555);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> seleect * from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'seleect * from student' at line 1
+mysql> select * from student;
++----+--------+--------+------------+------+
+| id | f_name | l_name | contact    | age  |
++----+--------+--------+------------+------+
+|  1 | a      | b      | 1111111111 |   18 |
+|  2 | c      | d      | 2222222222 |   18 |
+|  3 | e      | f      | 3333333333 |   18 |
+|  4 | g      | h      | 4444444444 |   18 |
+|  5 | i      | j      | 5555555555 |   18 |
++----+--------+--------+------------+------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> alter table student modify f_name varchar(10) not null;
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int         | NO   | PRI | NULL    | auto_increment |
+| f_name  | varchar(10) | NO   |     | NULL    |                |
+| l_name  | varchar(30) | YES  |     | NULL    |                |
+| contact | bigint      | NO   |     | NULL    |                |
+| age     | int         | YES  |     | 18      |                |
++---------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student add column university(varchar(20) default 'Mumbai University');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(varchar(20) default 'Mumbai University')' at line 1
+mysql> alter table student add column university(varchar(20) default 'Mumbai_University');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(varchar(20) default 'Mumbai_University')' at line 1
+mysql> alter table student add column university(varchar(20) default'Mumbai_University');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(varchar(20) default'Mumbai_University')' at line 1
+mysql> alter table student add column university(varchar(20) default'Mumbai');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(varchar(20) default'Mumbai')' at line 1
+mysql> alter table student add column university(varchar(20) not null);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(varchar(20) not null)' at line 1
+mysql> alter student add column university(varchar(20) default'Mumbai');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'student add column university(varchar(20) default'Mumbai')' at line 1
+mysql> alter table student add column university varchar(20) not null;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student modify university varchar(30) default 'Mumbai';
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int         | NO   | PRI | NULL    | auto_increment |
+| f_name     | varchar(10) | NO   |     | NULL    |                |
+| l_name     | varchar(30) | YES  |     | NULL    |                |
+| contact    | bigint      | NO   |     | NULL    |                |
+| age        | int         | YES  |     | 18      |                |
+| university | varchar(30) | YES  |     | Mumbai  |                |
++------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table student modify contact bigint unique;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int         | NO   | PRI | NULL    | auto_increment |
+| f_name     | varchar(10) | NO   |     | NULL    |                |
+| l_name     | varchar(30) | YES  |     | NULL    |                |
+| contact    | bigint      | YES  | UNI | NULL    |                |
+| age        | int         | YES  |     | 18      |                |
+| university | varchar(30) | YES  |     | Mumbai  |                |
++------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table student rename id = roll_no;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= roll_no' at line 1
+mysql> alter table student rename id to roll_no;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to roll_no' at line 1
+mysql> alter table student rename id = 'roll_no';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 'roll_no'' at line 1
+mysql> alter table student rename id 'roll_no';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''roll_no'' at line 1
+mysql> alter table student rename id to 'roll_no';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to 'roll_no'' at line 1
+mysql> alter table student rename 'id' = 'roll_no';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''id' = 'roll_no'' at line 1
+mysql> alter table student rename column id = 'roll_no';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 'roll_no'' at line 1
+mysql> alter table student rename column id to roll_no;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| roll_no    | int         | NO   | PRI | NULL    | auto_increment |
+| f_name     | varchar(10) | NO   |     | NULL    |                |
+| l_name     | varchar(30) | YES  |     | NULL    |                |
+| contact    | bigint      | YES  | UNI | NULL    |                |
+| age        | int         | YES  |     | 18      |                |
+| university | varchar(30) | YES  |     | Mumbai  |                |
++------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> drop column university;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column university' at line 1
+mysql> drop university;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'university' at line 1
+mysql> alter table drop column age ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'drop column age' at line 1
+mysql> alter table student drop age;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| roll_no    | int         | NO   | PRI | NULL    | auto_increment |
+| f_name     | varchar(10) | NO   |     | NULL    |                |
+| l_name     | varchar(30) | YES  |     | NULL    |                |
+| contact    | bigint      | YES  | UNI | NULL    |                |
+| university | varchar(30) | YES  |     | Mumbai  |                |
++------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student add column age int default'18' after contact;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| roll_no    | int         | NO   | PRI | NULL    | auto_increment |
+| f_name     | varchar(10) | NO   |     | NULL    |                |
+| l_name     | varchar(30) | YES  |     | NULL    |                |
+| contact    | bigint      | YES  | UNI | NULL    |                |
+| age        | int         | YES  |     | 18      |                |
+| university | varchar(30) | YES  |     | Mumbai  |                |
++------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table student drop column roll_no;
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| f_name     | varchar(10) | NO   |     | NULL    |       |
+| l_name     | varchar(30) | YES  |     | NULL    |       |
+| contact    | bigint      | YES  | UNI | NULL    |       |
+| age        | int         | YES  |     | 18      |       |
+| university | varchar(30) | YES  |     | Mumbai  |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student add column roll_no int primary key auto_increment first;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| roll_no    | int         | NO   | PRI | NULL    | auto_increment |
+| f_name     | varchar(10) | NO   |     | NULL    |                |
+| l_name     | varchar(30) | YES  |     | NULL    |                |
+| contact    | bigint      | YES  | UNI | NULL    |                |
+| age        | int         | YES  |     | 18      |                |
+| university | varchar(30) | YES  |     | Mumbai  |                |
++------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student;
++---------+--------+--------+------------+------+------------+
+| roll_no | f_name | l_name | contact    | age  | university |
++---------+--------+--------+------------+------+------------+
+|       1 | a      | b      | 1111111111 |   18 |            |
+|       2 | c      | d      | 2222222222 |   18 |            |
+|       3 | e      | f      | 3333333333 |   18 |            |
+|       4 | g      | h      | 4444444444 |   18 |            |
+|       5 | i      | j      | 5555555555 |   18 |            |
++---------+--------+--------+------------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> truncate table student;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student(f_name,l_name,contact) values ('a','a',1111111111),('b','b',2222222222),('c','c',3333333333),('d','d',4444444444);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+--------+--------+------------+------+------------+
+| roll_no | f_name | l_name | contact    | age  | university |
++---------+--------+--------+------------+------+------------+
+|       1 | a      | a      | 1111111111 |   18 | Mumbai     |
+|       2 | b      | b      | 2222222222 |   18 | Mumbai     |
+|       3 | c      | c      | 3333333333 |   18 | Mumbai     |
+|       4 | d      | d      | 4444444444 |   18 | Mumbai     |
++---------+--------+--------+------------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> update student set f_name,l_name = 'o','p' where id = 4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',l_name = 'o','p' where id = 4' at line 1
+mysql> update student set f_name = 'o',l_name='p' where id = 4;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> update student set f_name = 'o',l_name='p' where roll_no = 4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++---------+--------+--------+------------+------+------------+
+| roll_no | f_name | l_name | contact    | age  | university |
++---------+--------+--------+------------+------+------------+
+|       1 | a      | a      | 1111111111 |   18 | Mumbai     |
+|       2 | b      | b      | 2222222222 |   18 | Mumbai     |
+|       3 | c      | c      | 3333333333 |   18 | Mumbai     |
+|       4 | o      | p      | 4444444444 |   18 | Mumbai     |
++---------+--------+--------+------------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from student where roll_no = 4;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++---------+--------+--------+------------+------+------------+
+| roll_no | f_name | l_name | contact    | age  | university |
++---------+--------+--------+------------+------+------------+
+|       1 | a      | a      | 1111111111 |   18 | Mumbai     |
+|       2 | b      | b      | 2222222222 |   18 | Mumbai     |
+|       3 | c      | c      | 3333333333 |   18 | Mumbai     |
++---------+--------+--------+------------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student(f_name,l_name,contact) values ('g','g',5555555555);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++---------+--------+--------+------------+------+------------+
+| roll_no | f_name | l_name | contact    | age  | university |
++---------+--------+--------+------------+------+------------+
+|       1 | a      | a      | 1111111111 |   18 | Mumbai     |
+|       2 | b      | b      | 2222222222 |   18 | Mumbai     |
+|       3 | c      | c      | 3333333333 |   18 | Mumbai     |
+|       5 | g      | g      | 5555555555 |   18 | Mumbai     |
++---------+--------+--------+------------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> truncate table student;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> insert into student(f_name,l_name,contact) values ('a','a',1111111111),('b','b',2222222222),('c','c',3333333333),('d','d',4444444444);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+--------+--------+------------+------+------------+
+| roll_no | f_name | l_name | contact    | age  | university |
++---------+--------+--------+------------+------+------------+
+|       1 | a      | a      | 1111111111 |   18 | Mumbai     |
+|       2 | b      | b      | 2222222222 |   18 | Mumbai     |
+|       3 | c      | c      | 3333333333 |   18 | Mumbai     |
+|       4 | d      | d      | 4444444444 |   18 | Mumbai     |
++---------+--------+--------+------------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select student.f_name , student.contact from student;
++--------+------------+
+| f_name | contact    |
++--------+------------+
+| a      | 1111111111 |
+| b      | 2222222222 |
+| c      | 3333333333 |
+| d      | 4444444444 |
++--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student auto_increment = 10;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into student(f_name,l_name,contact) values ('l','l',5555555555),('p','p',6666666666),('i','i',7777777777);
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+--------+--------+------------+------+------------+
+| roll_no | f_name | l_name | contact    | age  | university |
++---------+--------+--------+------------+------+------------+
+|       1 | a      | a      | 1111111111 |   18 | Mumbai     |
+|       2 | b      | b      | 2222222222 |   18 | Mumbai     |
+|       3 | c      | c      | 3333333333 |   18 | Mumbai     |
+|       4 | d      | d      | 4444444444 |   18 | Mumbai     |
+|      10 | l      | l      | 5555555555 |   18 | Mumbai     |
+|      11 | p      | p      | 6666666666 |   18 | Mumbai     |
+|      12 | i      | i      | 7777777777 |   18 | Mumbai     |
++---------+--------+--------+------------+------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select f_name as first_name from student;
++------------+
+| first_name |
++------------+
+| a          |
+| b          |
+| c          |
+| d          |
+| l          |
+| p          |
+| i          |
++------------+
+7 rows in set (0.00 sec)
+
+mysql>
