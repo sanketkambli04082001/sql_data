@@ -1,0 +1,195 @@
+Microsoft Windows [Version 10.0.22631.3296]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p -h localhost
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use kj45;
+Database changed
+mysql> select * from student_data;
++----+----------+------------+-------+-----------+------------+
+| id | name     | dept       | marks | paid_fees | attendance |
++----+----------+------------+-------+-----------+------------+
+|  1 | krushna  | electrical |    90 |    100245 |         92 |
+|  2 | sanket   | IT         |    45 |    139394 |         50 |
+|  3 | rajith   | CS         |    44 |     14256 |         55 |
+|  4 | Ram      | mechanical |    54 |     51895 |         84 |
+|  5 | mayur    | electrical |    86 |     25146 |         95 |
+|  6 | priyanka | CS         |    99 |     14319 |         75 |
+|  7 | sushant  | civil      |    87 |     45751 |         65 |
+|  8 | virendra | civil      |    56 |     14524 |         88 |
+|  9 | bassi    | mechanical |    45 |     45751 |         59 |
+| 10 | raone    | design     |    81 |     45751 |         49 |
+| 11 | naruto   | jutsu      |    10 |     15424 |         66 |
++----+----------+------------+-------+-----------+------------+
+11 rows in set (0.05 sec)
+
+mysql> select dept ,count(name) from student_data group by dept;
++------------+-------------+
+| dept       | count(name) |
++------------+-------------+
+| electrical |           2 |
+| IT         |           1 |
+| CS         |           2 |
+| mechanical |           2 |
+| civil      |           2 |
+| design     |           1 |
+| jutsu      |           1 |
++------------+-------------+
+7 rows in set (0.01 sec)
+
+mysql> select dept from student_data where dept not like 'mechanical';
++------------+
+| dept       |
++------------+
+| electrical |
+| IT         |
+| CS         |
+| electrical |
+| CS         |
+| civil      |
+| civil      |
+| design     |
+| jutsu      |
++------------+
+9 rows in set (0.01 sec)
+
+mysql> select * from student_data where marks not in (81,87);
++----+----------+------------+-------+-----------+------------+
+| id | name     | dept       | marks | paid_fees | attendance |
++----+----------+------------+-------+-----------+------------+
+|  1 | krushna  | electrical |    90 |    100245 |         92 |
+|  2 | sanket   | IT         |    45 |    139394 |         50 |
+|  3 | rajith   | CS         |    44 |     14256 |         55 |
+|  4 | Ram      | mechanical |    54 |     51895 |         84 |
+|  5 | mayur    | electrical |    86 |     25146 |         95 |
+|  6 | priyanka | CS         |    99 |     14319 |         75 |
+|  8 | virendra | civil      |    56 |     14524 |         88 |
+|  9 | bassi    | mechanical |    45 |     45751 |         59 |
+| 11 | naruto   | jutsu      |    10 |     15424 |         66 |
++----+----------+------------+-------+-----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from student_data where marks not like '81' or '87';
++----+----------+------------+-------+-----------+------------+
+| id | name     | dept       | marks | paid_fees | attendance |
++----+----------+------------+-------+-----------+------------+
+|  1 | krushna  | electrical |    90 |    100245 |         92 |
+|  2 | sanket   | IT         |    45 |    139394 |         50 |
+|  3 | rajith   | CS         |    44 |     14256 |         55 |
+|  4 | Ram      | mechanical |    54 |     51895 |         84 |
+|  5 | mayur    | electrical |    86 |     25146 |         95 |
+|  6 | priyanka | CS         |    99 |     14319 |         75 |
+|  7 | sushant  | civil      |    87 |     45751 |         65 |
+|  8 | virendra | civil      |    56 |     14524 |         88 |
+|  9 | bassi    | mechanical |    45 |     45751 |         59 |
+| 10 | raone    | design     |    81 |     45751 |         49 |
+| 11 | naruto   | jutsu      |    10 |     15424 |         66 |
++----+----------+------------+-------+-----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from student_data where str(marks) not like '81' or '87';
+ERROR 1305 (42000): FUNCTION kj45.str does not exist
+mysql> select * from student_data where char(marks) not like '81' or '87';
++----+----------+------------+-------+-----------+------------+
+| id | name     | dept       | marks | paid_fees | attendance |
++----+----------+------------+-------+-----------+------------+
+|  1 | krushna  | electrical |    90 |    100245 |         92 |
+|  2 | sanket   | IT         |    45 |    139394 |         50 |
+|  3 | rajith   | CS         |    44 |     14256 |         55 |
+|  4 | Ram      | mechanical |    54 |     51895 |         84 |
+|  5 | mayur    | electrical |    86 |     25146 |         95 |
+|  6 | priyanka | CS         |    99 |     14319 |         75 |
+|  7 | sushant  | civil      |    87 |     45751 |         65 |
+|  8 | virendra | civil      |    56 |     14524 |         88 |
+|  9 | bassi    | mechanical |    45 |     45751 |         59 |
+| 10 | raone    | design     |    81 |     45751 |         49 |
+| 11 | naruto   | jutsu      |    10 |     15424 |         66 |
++----+----------+------------+-------+-----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from student_data where varchar(marks) not like '81' or '87';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(marks) not like '81' or '87'' at line 1
+mysql> select * from student_data where varchar(marks) not like '81' or '87';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(marks) not like '81' or '87'' at line 1
+mysql> select * from student_data where marks not in(90,54);
++----+----------+------------+-------+-----------+------------+
+| id | name     | dept       | marks | paid_fees | attendance |
++----+----------+------------+-------+-----------+------------+
+|  2 | sanket   | IT         |    45 |    139394 |         50 |
+|  3 | rajith   | CS         |    44 |     14256 |         55 |
+|  5 | mayur    | electrical |    86 |     25146 |         95 |
+|  6 | priyanka | CS         |    99 |     14319 |         75 |
+|  7 | sushant  | civil      |    87 |     45751 |         65 |
+|  8 | virendra | civil      |    56 |     14524 |         88 |
+|  9 | bassi    | mechanical |    45 |     45751 |         59 |
+| 10 | raone    | design     |    81 |     45751 |         49 |
+| 11 | naruto   | jutsu      |    10 |     15424 |         66 |
++----+----------+------------+-------+-----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select count(id),dept student_data where marks not in(10,81) group by dept;
+ERROR 1054 (42S22): Unknown column 'id' in 'field list'
+mysql> select count(id),dept student_data where marks not in(10,81) group by dept;
+ERROR 1054 (42S22): Unknown column 'id' in 'field list'
+mysql> select count(id),dept student_data where marks not in (10,81) group by dept;
+ERROR 1054 (42S22): Unknown column 'id' in 'field list'
+mysql> select * from student_data;
++----+----------+------------+-------+-----------+------------+
+| id | name     | dept       | marks | paid_fees | attendance |
++----+----------+------------+-------+-----------+------------+
+|  1 | krushna  | electrical |    90 |    100245 |         92 |
+|  2 | sanket   | IT         |    45 |    139394 |         50 |
+|  3 | rajith   | CS         |    44 |     14256 |         55 |
+|  4 | Ram      | mechanical |    54 |     51895 |         84 |
+|  5 | mayur    | electrical |    86 |     25146 |         95 |
+|  6 | priyanka | CS         |    99 |     14319 |         75 |
+|  7 | sushant  | civil      |    87 |     45751 |         65 |
+|  8 | virendra | civil      |    56 |     14524 |         88 |
+|  9 | bassi    | mechanical |    45 |     45751 |         59 |
+| 10 | raone    | design     |    81 |     45751 |         49 |
+| 11 | naruto   | jutsu      |    10 |     15424 |         66 |
++----+----------+------------+-------+-----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select dept,count(id) from student_data where dept != 'mechanical';
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'kj45.student_data.dept'; this is incompatible with sql_mode=only_full_group_by
+mysql> select dept,count(id) from student_data where dept != 'mechanical' group by dept;
++------------+-----------+
+| dept       | count(id) |
++------------+-----------+
+| electrical |         2 |
+| IT         |         1 |
+| CS         |         2 |
+| civil      |         2 |
+| design     |         1 |
+| jutsu      |         1 |
++------------+-----------+
+6 rows in set (0.01 sec)
+
+mysql> select dept,count(id) from student_data where marks not in (81,10) ;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'kj45.student_data.dept'; this is incompatible with sql_mode=only_full_group_by
+mysql> select dept,count(id) from student_data where marks not in (81,10) group by dept;
++------------+-----------+
+| dept       | count(id) |
++------------+-----------+
+| electrical |         2 |
+| IT         |         1 |
+| CS         |         2 |
+| mechanical |         2 |
+| civil      |         2 |
++------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from stude
