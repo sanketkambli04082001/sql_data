@@ -1,0 +1,624 @@
+Microsoft Windows [Version 10.0.19045.4170]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p -h localhost
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db                 |
+| information_schema |
+| minal              |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sanket             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> use sanket;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_sanket |
++------------------+
+| employee         |
+| student          |
+| table1           |
+| table2           |
++------------------+
+4 rows in set (0.01 sec)
+
+mysql> select * from employee ;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  1 | Sanket      | it         |    90 |    100000 |        100 |
+|  2 | Krushna     | elec       |    80 |    100000 |         90 |
+|  3 | rajit       | it         |    90 |    230000 |         65 |
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
+|  7 | Sukuna      | it         | 56.12 |    300000 |         90 |
+|  9 | champk      | extc       |    90 |    350000 |         76 |
+| 10 | jethalal    | it         | 99.99 |    399999 |          0 |
++----+-------------+------------+-------+-----------+------------+
+8 rows in set (0.01 sec)
+
+mysql> select lower(name);
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select lower(name);
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select lower(name) from employee;
++-------------+
+| lower(name) |
++-------------+
+| sanket      |
+| krushna     |
+| rajit       |
+| bodybuilder |
+| gojo        |
+| sukuna      |
+| champk      |
+| jethalal    |
++-------------+
+8 rows in set (0.00 sec)
+
+mysql> select lower('gojo') from employee;
++---------------+
+| lower('gojo') |
++---------------+
+| gojo          |
+| gojo          |
+| gojo          |
+| gojo          |
+| gojo          |
+| gojo          |
+| gojo          |
+| gojo          |
++---------------+
+8 rows in set (0.00 sec)
+
+mysql> select lower('gojo');
++---------------+
+| lower('gojo') |
++---------------+
+| gojo          |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select concat('Welcome to ','Mumbai');
++--------------------------------+
+| concat('Welcome to ','Mumbai') |
++--------------------------------+
+| Welcome to Mumbai              |
++--------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select length('Welcome to goa');
++--------------------------+
+| length('Welcome to goa') |
++--------------------------+
+|                       14 |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> select concat(name,' ',department);
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select concat(name,' ',department) from employee;
++-----------------------------+
+| concat(name,' ',department) |
++-----------------------------+
+| Sanket it                   |
+| Krushna elec                |
+| rajit it                    |
+| bodybuilder comps           |
+| Gojo comps                  |
+| Sukuna it                   |
+| champk extc                 |
+| jethalal it                 |
++-----------------------------+
+8 rows in set (0.00 sec)
+
+mysql> select abs(-10);
++----------+
+| abs(-10) |
++----------+
+|       10 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select abs(-109022.21229)
+    -> ;
++--------------------+
+| abs(-109022.21229) |
++--------------------+
+|       109022.21229 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select ceil(12.0);
++------------+
+| ceil(12.0) |
++------------+
+|         12 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select ceil(12.1);
++------------+
+| ceil(12.1) |
++------------+
+|         13 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select ceil(12.000001)
+    -> ;
++-----------------+
+| ceil(12.000001) |
++-----------------+
+|              13 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select ceil(12.9000000000);
++---------------------+
+| ceil(12.9000000000) |
++---------------------+
+|                  13 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select round(10.4999995555559999);
++----------------------------+
+| round(10.4999995555559999) |
++----------------------------+
+|                         10 |
++----------------------------+
+1 row in set (0.00 sec)
+
+mysql> select round(10.1);
++-------------+
+| round(10.1) |
++-------------+
+|          10 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select round(10.66);
++--------------+
+| round(10.66) |
++--------------+
+|           11 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select truncate(12.00000000,3);
++-------------------------+
+| truncate(12.00000000,3) |
++-------------------------+
+|                  12.000 |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> select truncate(12.00000000,10);
++--------------------------+
+| truncate(12.00000000,10) |
++--------------------------+
+|              12.00000000 |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> select truncate(12.00000000,0.1);
++---------------------------+
+| truncate(12.00000000,0.1) |
++---------------------------+
+|                        12 |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> select truncate(12.00000000,5.6);
++---------------------------+
+| truncate(12.00000000,5.6) |
++---------------------------+
+|                 12.000000 |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> select truncate(12.00000000,5.3);
++---------------------------+
+| truncate(12.00000000,5.3) |
++---------------------------+
+|                  12.00000 |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> select mod(5,8);
++----------+
+| mod(5,8) |
++----------+
+|        5 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select mod(5,2);
++----------+
+| mod(5,2) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select floor(4//2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '/2)' at line 1
+mysql> select floor(4/2);
++------------+
+| floor(4/2) |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select pow(4,2);
++----------+
+| pow(4,2) |
++----------+
+|       16 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select sqrt(9);
++---------+
+| sqrt(9) |
++---------+
+|       3 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select sqrt(19.78);
++-------------------+
+| sqrt(19.78)       |
++-------------------+
+| 4.447471191587417 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee;
++----+-------------+------------+-------+-----------+------------+
+| id | name        | department | marks | paid_fees | attendance |
++----+-------------+------------+-------+-----------+------------+
+|  1 | Sanket      | it         |    90 |    100000 |        100 |
+|  2 | Krushna     | elec       |    80 |    100000 |         90 |
+|  3 | rajit       | it         |    90 |    230000 |         65 |
+|  5 | bodybuilder | comps      |    86 |    300000 |         75 |
+|  6 | Gojo        | comps      |    10 |    300000 |         10 |
+|  7 | Sukuna      | it         | 56.12 |    300000 |         90 |
+|  9 | champk      | extc       |    90 |    350000 |         76 |
+| 10 | jethalal    | it         | 99.99 |    399999 |          0 |
++----+-------------+------------+-------+-----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select id, name, department,round(marks) from employee;
++----+-------------+------------+--------------+
+| id | name        | department | round(marks) |
++----+-------------+------------+--------------+
+|  1 | Sanket      | it         |           90 |
+|  2 | Krushna     | elec       |           80 |
+|  3 | rajit       | it         |           90 |
+|  5 | bodybuilder | comps      |           86 |
+|  6 | Gojo        | comps      |           10 |
+|  7 | Sukuna      | it         |           56 |
+|  9 | champk      | extc       |           90 |
+| 10 | jethalal    | it         |          100 |
++----+-------------+------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> select id, name, department,ceil(marks) from employee;
++----+-------------+------------+-------------+
+| id | name        | department | ceil(marks) |
++----+-------------+------------+-------------+
+|  1 | Sanket      | it         |          90 |
+|  2 | Krushna     | elec       |          80 |
+|  3 | rajit       | it         |          90 |
+|  5 | bodybuilder | comps      |          86 |
+|  6 | Gojo        | comps      |          10 |
+|  7 | Sukuna      | it         |          57 |
+|  9 | champk      | extc       |          90 |
+| 10 | jethalal    | it         |         100 |
++----+-------------+------------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> select id, name, department,(marks-2) from employee;
++----+-------------+------------+--------------------+
+| id | name        | department | (marks-2)          |
++----+-------------+------------+--------------------+
+|  1 | Sanket      | it         |                 88 |
+|  2 | Krushna     | elec       |                 78 |
+|  3 | rajit       | it         |                 88 |
+|  5 | bodybuilder | comps      |                 84 |
+|  6 | Gojo        | comps      |                  8 |
+|  7 | Sukuna      | it         | 54.119998931884766 |
+|  9 | champk      | extc       |                 88 |
+| 10 | jethalal    | it         |  97.98999786376953 |
++----+-------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql> select id, name, department,(marks/2) from employee;
++----+-------------+------------+--------------------+
+| id | name        | department | (marks/2)          |
++----+-------------+------------+--------------------+
+|  1 | Sanket      | it         |                 45 |
+|  2 | Krushna     | elec       |                 40 |
+|  3 | rajit       | it         |                 45 |
+|  5 | bodybuilder | comps      |                 43 |
+|  6 | Gojo        | comps      |                  5 |
+|  7 | Sukuna      | it         | 28.059999465942383 |
+|  9 | champk      | extc       |                 45 |
+| 10 | jethalal    | it         | 49.994998931884766 |
++----+-------------+------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql> select id, name, department,mod(marks,2) from employee;
++----+-------------+------------+---------------------+
+| id | name        | department | mod(marks,2)        |
++----+-------------+------------+---------------------+
+|  1 | Sanket      | it         |                   0 |
+|  2 | Krushna     | elec       |                   0 |
+|  3 | rajit       | it         |                   0 |
+|  5 | bodybuilder | comps      |                   0 |
+|  6 | Gojo        | comps      |                   0 |
+|  7 | Sukuna      | it         | 0.11999893188476562 |
+|  9 | champk      | extc       |                   0 |
+| 10 | jethalal    | it         |  1.9899978637695312 |
++----+-------------+------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql> select id, name, department,floor(marks/2) from employee;
++----+-------------+------------+----------------+
+| id | name        | department | floor(marks/2) |
++----+-------------+------------+----------------+
+|  1 | Sanket      | it         |             45 |
+|  2 | Krushna     | elec       |             40 |
+|  3 | rajit       | it         |             45 |
+|  5 | bodybuilder | comps      |             43 |
+|  6 | Gojo        | comps      |              5 |
+|  7 | Sukuna      | it         |             28 |
+|  9 | champk      | extc       |             45 |
+| 10 | jethalal    | it         |             49 |
++----+-------------+------------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> select id, name, department,floor(marks/2) from employee where id = 9;
++----+--------+------------+----------------+
+| id | name   | department | floor(marks/2) |
++----+--------+------------+----------------+
+|  9 | champk | extc       |             45 |
++----+--------+------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> select id, name, department,sqrt(marks,2) from employee where id = 9;
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'sqrt'
+mysql> select id, name, department,sqrt(marks) from employee where id = 9;
++----+--------+------------+-------------------+
+| id | name   | department | sqrt(marks)       |
++----+--------+------------+-------------------+
+|  9 | champk | extc       | 9.486832980505138 |
++----+--------+------------+-------------------+
+1 row in set (0.00 sec)
+
+mysql> select curdate();
++------------+
+| curdate()  |
++------------+
+| 2024-03-14 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select sysdate();
++---------------------+
+| sysdate()           |
++---------------------+
+| 2024-03-14 18:21:25 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2024-03-14 18:21:32 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select last_day(currdate());
+ERROR 1305 (42000): FUNCTION sanket.currdate does not exist
+mysql> select last_day(curdate());
++---------------------+
+| last_day(curdate()) |
++---------------------+
+| 2024-03-31          |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select last_day(now());
++-----------------+
+| last_day(now()) |
++-----------------+
+| 2024-03-31      |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),%d-%m-%y);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%d-%m-%y)' at line 1
+mysql> select date_format(curdate(),%d-%M-%y);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%d-%M-%y)' at line 1
+mysql> select date_format(curdate(),'%d-%m-%y');
++-----------------------------------+
+| date_format(curdate(),'%d-%m-%y') |
++-----------------------------------+
+| 14-03-24                          |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%D-%M-%Y');
++-----------------------------------+
+| date_format(curdate(),'%D-%M-%Y') |
++-----------------------------------+
+| 14th-March-2024                   |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%d-%c-%Y');
++-----------------------------------+
+| date_format(curdate(),'%d-%c-%Y') |
++-----------------------------------+
+| 14-3-2024                         |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%d-%b-%Y');
++-----------------------------------+
+| date_format(curdate(),'%d-%b-%Y') |
++-----------------------------------+
+| 14-Mar-2024                       |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%D-%b-%Y');
++-----------------------------------+
+| date_format(curdate(),'%D-%b-%Y') |
++-----------------------------------+
+| 14th-Mar-2024                     |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%a %D-%b-%Y');
++--------------------------------------+
+| date_format(curdate(),'%a %D-%b-%Y') |
++--------------------------------------+
+| Thu 14th-Mar-2024                    |
++--------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%w %D-%b-%Y');
++--------------------------------------+
+| date_format(curdate(),'%w %D-%b-%Y') |
++--------------------------------------+
+| 4 14th-Mar-2024                      |
++--------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%W %D-%b-%Y');
++--------------------------------------+
+| date_format(curdate(),'%W %D-%b-%Y') |
++--------------------------------------+
+| Thursday 14th-Mar-2024               |
++--------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%W %D-%b-%Y' %H:%i:%s);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':%i:%s)' at line 1
+mysql> select date_format(curdate(),'%W %D-%b-%Y' ,'%H:%i:%s');
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'date_format'
+mysql> select date_format(curdate(),'%W %D-%b-%Y' ,%H:%i:%s);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%H:%i:%s)' at line 1
+mysql> select date_format(curdate(),'%W %D-%b-%Y %H:%i:%s');
++-----------------------------------------------+
+| date_format(curdate(),'%W %D-%b-%Y %H:%i:%s') |
++-----------------------------------------------+
+| Thursday 14th-Mar-2024 00:00:00               |
++-----------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(curdate(),'%W %D-%b-%Y %h:%i:%s');
++-----------------------------------------------+
+| date_format(curdate(),'%W %D-%b-%Y %h:%i:%s') |
++-----------------------------------------------+
+| Thursday 14th-Mar-2024 12:00:00               |
++-----------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(now(),'%W %D-%b-%Y %h:%i:%s');
++-------------------------------------------+
+| date_format(now(),'%W %D-%b-%Y %h:%i:%s') |
++-------------------------------------------+
+| Thursday 14th-Mar-2024 06:41:48           |
++-------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> create table abc(id int primary key,DOB date not null,age int check(age>=18));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc abc;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| id    | int  | NO   | PRI | NULL    |       |
+| DOB   | date | NO   |     | NULL    |       |
+| age   | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into abc(DOB,age) values ('2001-08-04',18),('2001-07-03',15);
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql> alter table abc modify auto_increment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into abc(DOB,age) values (1,'2001-08-04',18),(2,'2001-07-03',15);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into abc(DOB,age) values ('2001-08-04',18),('2001-07-03',15);
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql> insert into abc(DOB,age) values (1,'2001-08-04',18),(2,'2001-07-03',15);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into abc(id,DOB,age) values (1,'2001-08-04',18),(2,'2001-07-03',15);
+ERROR 3819 (HY000): Check constraint 'abc_chk_1' is violated.
+mysql> insert into abc(id,DOB,age) values (1,'2001-08-04',18),(2,'2001-07-03',19);
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from abc;
++----+------------+------+
+| id | DOB        | age  |
++----+------------+------+
+|  1 | 2001-08-04 |   18 |
+|  2 | 2001-07-03 |   19 |
++----+------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select id,date_format(DOB,'%W %D-%b-%Y %H:%i:%s') as DOB,age from abc;
++----+--------------------------------+------+
+| id | DOB                            | age  |
++----+--------------------------------+------+
+|  1 | Saturday 4th-Aug-2001 00:00:00 |   18 |
+|  2 | Tuesday 3rd-Jul-2001 00:00:00  |   19 |
++----+--------------------------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select id,date_format(DOB,now(),'%W %D-%b-%Y %H:%i:%s') as DOB,age from abc;
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'date_format'
+mysql> select id,date_format(DOB,'%W %D-%b-%Y %H:%i:%s') as DOB,age from abc;
++----+--------------------------------+------+
+| id | DOB                            | age  |
++----+--------------------------------+------+
+|  1 | Saturday 4th-Aug-2001 00:00:00 |   18 |
+|  2 | Tuesday 3rd-Jul-2001 00:00:00  |   19 |
++----+--------------------------------+------+
+2 rows in set (0.00 sec)
+
+mysql>
