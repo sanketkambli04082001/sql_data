@@ -1,0 +1,121 @@
+Microsoft Windows [Version 10.0.22631.3296]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p -h localhost
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use kj45;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_kj45 |
++----------------+
+| collage        |
+| my             |
+| student        |
+| student_data   |
+| table1         |
+| table2         |
+| unknown        |
+| user           |
++----------------+
+8 rows in set (0.02 sec)
+
+mysql> desc user;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| uid       | int         | NO   | PRI | NULL    |       |
+| user_name | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table product(id int ,product_name varchar(20),uid int ,foreign key(uid) references user(uid));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc product;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | YES  |     | NULL    |       |
+| product_name | varchar(20) | YES  |     | NULL    |       |
+| uid          | int         | YES  | MUL | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table product modify id int primary key ;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc product;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | NO   | PRI | NULL    |       |
+| product_name | varchar(20) | YES  |     | NULL    |       |
+| uid          | int         | YES  | MUL | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into user values(1,'Krushna'),(2,'Sanket'),(3,'Rajith'),(4,'Shushant'),(5,'Mayur');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from user;
++-----+-----------+
+| uid | user_name |
++-----+-----------+
+|   1 | Krushna   |
+|   2 | Sanket    |
+|   3 | Rajith    |
+|   4 | Shushant  |
+|   5 | Mayur     |
++-----+-----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into product values(1,'Ikigai',1),(2,'mailk',1),(3,'Ice creame',2),(4,'vada pav',3),(5,'dal bati churma',2);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from product ;
++----+-----------------+------+
+| id | product_name    | uid  |
++----+-----------------+------+
+|  1 | Ikigai          |    1 |
+|  2 | mailk           |    1 |
+|  3 | Ice creame      |    2 |
+|  4 | vada pav        |    3 |
+|  5 | dal bati churma |    2 |
++----+-----------------+------+
+5 rows in set (0.00 sec)
+
+mysql> desc product ;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| id           | int         | NO   | PRI | NULL    |       |
+| product_name | varchar(20) | YES  |     | NULL    |       |
+| uid          | int         | YES  | MUL | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select (select user_name from user),uid , product_name from product
+    -> ;
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select (select user_name, uid from user),uid , product_name from product
+    -> ;
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select (select user_name, uid from user),uid , product_name from product ;
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql>
