@@ -1,0 +1,138 @@
+Microsoft Windows [Version 10.0.19045.4170]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p -h localhost
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db                 |
+| information_schema |
+| minal              |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sanket             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.03 sec)
+
+mysql> use sanket;
+Database changed
+mysql> show tables;
++------------------+
+| Tables_in_sanket |
++------------------+
+| abc              |
+| employee         |
+| student          |
+| table1           |
+| table2           |
++------------------+
+5 rows in set (0.01 sec)
+
+mysql> create table use(id int primary key,u_name varchar(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'use(id int primary key,u_name varchar(20))' at line 1
+mysql> create table user(id int primary key,u_name varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table order(o_id int primary key,p_name varchar(20),u_id int,foreign key(u_id) references user(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order(o_id int primary key,p_name varchar(20),u_id int,foreign key(u_id) referen' at line 1
+mysql> create table product(p_id int primary key,p_name varchar(20),u_id int,foreign key(u_id) references user(id));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc user;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | NO   | PRI | NULL    |       |
+| u_name | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> desc product;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| p_id   | int         | NO   | PRI | NULL    |       |
+| p_name | varchar(20) | YES  |     | NULL    |       |
+| u_id   | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into user(id,u_name) values (1,'Sanket'),(2,'Krushna'),(3,'Rajit'),(4,'luffy');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from user;
++----+---------+
+| id | u_name  |
++----+---------+
+|  1 | Sanket  |
+|  2 | Krushna |
+|  3 | Rajit   |
+|  4 | luffy   |
++----+---------+
+4 rows in set (0.00 sec)
+
+mysql> insert into product(p_id,p_name,u_id) values (101,'bread',4),(102,'milk',4),(103,'eggs',3),(104,'ice_cream',2),(105,'red_bull',1);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from product;
++------+-----------+------+
+| p_id | p_name    | u_id |
++------+-----------+------+
+|  101 | bread     |    4 |
+|  102 | milk      |    4 |
+|  103 | eggs      |    3 |
+|  104 | ice_cream |    2 |
+|  105 | red_bull  |    1 |
++------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into product(p_id,p_name,u_id) values (106,'vada_pav',null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from product;
++------+-----------+------+
+| p_id | p_name    | u_id |
++------+-----------+------+
+|  101 | bread     |    4 |
+|  102 | milk      |    4 |
+|  103 | eggs      |    3 |
+|  104 | ice_cream |    2 |
+|  105 | red_bull  |    1 |
+|  106 | vada_pav  | NULL |
++------+-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> select user.u_name,product.p_name from product inner join user on user,id = product.u_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= product.u_id' at line 1
+mysql> select user.u_name,product.p_name from product inner join user on user.id = product.u_id;
++---------+-----------+
+| u_name  | p_name    |
++---------+-----------+
+| Sanket  | red_bull  |
+| Krushna | ice_cream |
+| Rajit   | eggs      |
+| luffy   | bread     |
+| luffy   | milk      |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql>
