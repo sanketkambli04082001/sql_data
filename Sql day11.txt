@@ -1,0 +1,358 @@
+Microsoft Windows [Version 10.0.22631.3296]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\KRUSHNA>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use kj45;
+Database changed
+mysql> select * from student_data;
++----+----------+--------+------------+-------+-----------+------------+
+| id | name     | l_name | dept       | marks | paid_fees | attendance |
++----+----------+--------+------------+-------+-----------+------------+
+|  1 | krushna  | jadhav | electrical |    90 |    100245 |         92 |
+|  2 | sanket   | jadhav | IT         |    45 |    139394 |         50 |
+|  3 | rajith   | jadhav | CS         |    44 |     14256 |         55 |
+|  4 | Ram      | jadhav | mechanical |    54 |     51895 |         84 |
+|  5 | mayur    | jadhav | electrical |    86 |     25146 |         95 |
+|  6 | priyanka | jadhav | CS         |    99 |     14319 |         75 |
+|  7 | sushant  | jadhav | civil      |    87 |     45751 |         65 |
+|  8 | virendra | jadhav | civil      |    56 |     14524 |         88 |
+|  9 | bassi    | jadhav | mechanical |    45 |     45751 |         59 |
+| 10 | raone    | jadhav | design     |    81 |     45751 |         49 |
+| 11 | naruto   | jadhav | jutsu      |    22 |     15424 |         10 |
++----+----------+--------+------------+-------+-----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select id,concat(name,' ',l_name),dept,case when marks >=40 and marks<60 then 'third class' when marks >=60 and marks<80 then 'second class' when marks>=80 and marks <=100 then 'first class' end as class from student_data;
++----+-------------------------+------------+-------------+
+| id | concat(name,' ',l_name) | dept       | class       |
++----+-------------------------+------------+-------------+
+|  1 | krushna jadhav          | electrical | first class |
+|  2 | sanket jadhav           | IT         | third class |
+|  3 | rajith jadhav           | CS         | third class |
+|  4 | Ram jadhav              | mechanical | third class |
+|  5 | mayur jadhav            | electrical | first class |
+|  6 | priyanka jadhav         | CS         | first class |
+|  7 | sushant jadhav          | civil      | first class |
+|  8 | virendra jadhav         | civil      | third class |
+|  9 | bassi jadhav            | mechanical | third class |
+| 10 | raone jadhav            | design     | first class |
+| 11 | naruto jadhav           | jutsu      | NULL        |
++----+-------------------------+------------+-------------+
+11 rows in set (0.00 sec)
+
+mysql> select id,concat(name,' ',l_name),dept,marks ,case when marks<=40 then 'failed' when marks >=40 and marks<60 then 'third class' when marks >=60 and m
+arks<80 then 'second class' when marks>=80 and marks <=100 then 'first class' end as class from student_data;
++----+-------------------------+------------+-------+-------------+
+| id | concat(name,' ',l_name) | dept       | marks | class       |
++----+-------------------------+------------+-------+-------------+
+|  1 | krushna jadhav          | electrical |    90 | first class |
+|  2 | sanket jadhav           | IT         |    45 | third class |
+|  3 | rajith jadhav           | CS         |    44 | third class |
+|  4 | Ram jadhav              | mechanical |    54 | third class |
+|  5 | mayur jadhav            | electrical |    86 | first class |
+|  6 | priyanka jadhav         | CS         |    99 | first class |
+|  7 | sushant jadhav          | civil      |    87 | first class |
+|  8 | virendra jadhav         | civil      |    56 | third class |
+|  9 | bassi jadhav            | mechanical |    45 | third class |
+| 10 | raone jadhav            | design     |    81 | first class |
+| 11 | naruto jadhav           | jutsu      |    22 | failed      |
++----+-------------------------+------------+-------+-------------+
+11 rows in set (0.00 sec)
+
+mysql> ---> it was about "case"  statement                                                             ^C
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> show tables;
++----------------+
+| Tables_in_kj45 |
++----------------+
+| client_table   |
+| collage        |
+| coustomers     |
+| my             |
+| product        |
+| student        |
+| student_data   |
+| table1         |
+| table2         |
+| unknown        |
+| user           |
++----------------+
+11 rows in set (0.03 sec)
+
+mysql> select * from collage ;
+Empty set (0.01 sec)
+
+mysql> select * from student;
++--------+---------+--------+------------+----------+
+| rollno | f_name  | l_name | contact    | city     |
++--------+---------+--------+------------+----------+
+|      1 | Krushna | Jadhav | 8956234512 | mirzapur |
+|    100 | hggh    | ghgg   | 5252525252 | mirzapur |
++--------+---------+--------+------------+----------+
+2 rows in set (0.01 sec)
+
+mysql> drop table student ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table collage(id int primary key auto_increment ,name varchar(50) not null,location varchar(50) not null ,);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> create table collage(id int primary key auto_increment ,name varchar(50) not null,location varchar(50) not null );
+ERROR 1050 (42S01): Table 'collage' already exists
+mysql> drop table collage;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table collage(id int primary key auto_increment ,name varchar(50) not null,location varchar(50) not null );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc collage ;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int         | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(50) | NO   |     | NULL    |                |
+| location | varchar(50) | NO   |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> create table student (s_id int primary key ,s_name varchar(50) not null , s_age int not null ,s_city varchar(50) not null default 'AMB' ,collage_id  int , foreign key (collage_id) references student(cid) );
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'cid' for constraint 'student_ibfk_1' in the referenced table 'student'
+mysql> create table student (s_id int primary key ,s_name varchar(50) not null , s_age int not null ,s_city varchar(50) not null default 'AMB' ,collage_id  int , foreign key (collage_id) references collage(cid) );
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'cid' for constraint 'student_ibfk_1' in the referenced table 'collage'
+mysql> create table student (s_id int primary key ,s_name varchar(50) not null , s_age int not null ,s_city varchar(50) not null default 'AMB' ,collage_id  int , foreign key (collage_id) references collage(id) );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc student ;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| s_id       | int         | NO   | PRI | NULL    |       |
+| s_name     | varchar(50) | NO   |     | NULL    |       |
+| s_age      | int         | NO   |     | NULL    |       |
+| s_city     | varchar(50) | NO   |     | AMB     |       |
+| collage_id | int         | YES  | MUL | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into collage(name,location) values ('AC patil','kharghar'),('Datta meghe collage of engg','Airoli'),('IIT','Mumbai'),('Hidden leaf collage of jutsu','Hidden leaf'),('SSJP'.'Ambernath');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.'Ambernath')' at line 1
+mysql> insert into collage(name,location) values ('AC patil','kharghar'),('Datta meghe collage of engg','Airoli'),('IIT','Mumbai'),('Hidden leaf collage of jutsu','Hidden leaf'),('SSJP','Ambernath');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from collage;
++----+------------------------------+-------------+
+| id | name                         | location    |
++----+------------------------------+-------------+
+|  1 | AC patil                     | kharghar    |
+|  2 | Datta meghe collage of engg  | Airoli      |
+|  3 | IIT                          | Mumbai      |
+|  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|  5 | SSJP                         | Ambernath   |
++----+------------------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student values (1,'Krushna',23,'Ambernath',1),(2,'Rajith',25,'Kalyan',4),(3,'Naruto',19,'Hidden leaf',4),(4,'Sanket',23,'Badlapur',null),(5,'Mayur',24,Null),(6,'Pritii',20,'Ambernath',5),(7,'Ram',21,'Badlapur',2),(8,'Shankar',80,'Heal',3),(9,'Pintya',26,'Bhivandi',3);
+ERROR 1136 (21S01): Column count doesn't match value count at row 5
+mysql> insert into student values (1,'Krushna',23,'Ambernath',1),(2,'Rajith',25,'Kalyan',4),(3,'Naruto',19,'Hidden leaf',4),(4,'Sanket',23,'Badlapur',null),
+(5,'Mayur',24,'Kalyan',Null),(6,'Pritii',20,'Ambernath',5),(7,'Ram',21,'Badlapur',2),(8,'Shankar',80,'Heal',3),(9,'Pintya',26,'Bhivandi',3);
+Query OK, 9 rows affected (0.01 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++------+---------+-------+-------------+------------+
+| s_id | s_name  | s_age | s_city      | collage_id |
++------+---------+-------+-------------+------------+
+|    1 | Krushna |    23 | Ambernath   |          1 |
+|    2 | Rajith  |    25 | Kalyan      |          4 |
+|    3 | Naruto  |    19 | Hidden leaf |          4 |
+|    4 | Sanket  |    23 | Badlapur    |       NULL |
+|    5 | Mayur   |    24 | Kalyan      |       NULL |
+|    6 | Pritii  |    20 | Ambernath   |          5 |
+|    7 | Ram     |    21 | Badlapur    |          2 |
+|    8 | Shankar |    80 | Heal        |          3 |
+|    9 | Pintya  |    26 | Bhivandi    |          3 |
++------+---------+-------+-------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select s.s_name,s.s_age,s.s_city as student_location,c.c.name ,c.location as collage_location from student as s inner join collage as c on s.s_id =  c.id ;
+ERROR 1054 (42S22): Unknown column 'c.c.name' in 'field list'
+mysql>
+mysql>
+mysql> select s.s_name,s.s_age,s.s_city as student_location,c.c_name ,c.location as collage_location from student as s inner join collage as c on s.s_id =
+c.id ;
+ERROR 1054 (42S22): Unknown column 'c.c_name' in 'field list'
+mysql>
+mysql>
+mysql>
+mysql> select s.s_name,s.s_age,s.s_city as student_location,c.c_name ,c.location as collage_location from student as s inner join collage as c on s.s_id =
+c.id ;
+ERROR 1054 (42S22): Unknown column 'c.c_name' in 'field list'
+mysql>
+mysql>
+mysql> select s.s_name,s.s_age,s.s_city as student_location,c.name ,c.location as collage_location from student as s inner join collage as c on s.s_id =  c.
+id ;
++---------+-------+------------------+------------------------------+------------------+
+| s_name  | s_age | student_location | name                         | collage_location |
++---------+-------+------------------+------------------------------+------------------+
+| Krushna |    23 | Ambernath        | AC patil                     | kharghar         |
+| Rajith  |    25 | Kalyan           | Datta meghe collage of engg  | Airoli           |
+| Naruto  |    19 | Hidden leaf      | IIT                          | Mumbai           |
+| Sanket  |    23 | Badlapur         | Hidden leaf collage of jutsu | Hidden leaf      |
+| Mayur   |    24 | Kalyan           | SSJP                         | Ambernath        |
++---------+-------+------------------+------------------------------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> select s.s_name,s.s_age,s.s_city as student_location,c.name as collage_name,c.location as collage_location from student as s inner join collage as c
+on s.s_id =  c.id ;
++---------+-------+------------------+------------------------------+------------------+
+| s_name  | s_age | student_location | collage_name                 | collage_location |
++---------+-------+------------------+------------------------------+------------------+
+| Krushna |    23 | Ambernath        | AC patil                     | kharghar         |
+| Rajith  |    25 | Kalyan           | Datta meghe collage of engg  | Airoli           |
+| Naruto  |    19 | Hidden leaf      | IIT                          | Mumbai           |
+| Sanket  |    23 | Badlapur         | Hidden leaf collage of jutsu | Hidden leaf      |
+| Mayur   |    24 | Kalyan           | SSJP                         | Ambernath        |
++---------+-------+------------------+------------------------------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> select s.s_name,s.s_age,s.s_city as student_location,c.name as collage_name,c.location as collage_location from student as s natural join collage as c ;
++---------+-------+------------------+------------------------------+------------------+
+| s_name  | s_age | student_location | collage_name                 | collage_location |
++---------+-------+------------------+------------------------------+------------------+
+| Krushna |    23 | Ambernath        | SSJP                         | Ambernath        |
+| Krushna |    23 | Ambernath        | Hidden leaf collage of jutsu | Hidden leaf      |
+| Krushna |    23 | Ambernath        | IIT                          | Mumbai           |
+| Krushna |    23 | Ambernath        | Datta meghe collage of engg  | Airoli           |
+| Krushna |    23 | Ambernath        | AC patil                     | kharghar         |
+| Rajith  |    25 | Kalyan           | SSJP                         | Ambernath        |
+| Rajith  |    25 | Kalyan           | Hidden leaf collage of jutsu | Hidden leaf      |
+| Rajith  |    25 | Kalyan           | IIT                          | Mumbai           |
+| Rajith  |    25 | Kalyan           | Datta meghe collage of engg  | Airoli           |
+| Rajith  |    25 | Kalyan           | AC patil                     | kharghar         |
+| Naruto  |    19 | Hidden leaf      | SSJP                         | Ambernath        |
+| Naruto  |    19 | Hidden leaf      | Hidden leaf collage of jutsu | Hidden leaf      |
+| Naruto  |    19 | Hidden leaf      | IIT                          | Mumbai           |
+| Naruto  |    19 | Hidden leaf      | Datta meghe collage of engg  | Airoli           |
+| Naruto  |    19 | Hidden leaf      | AC patil                     | kharghar         |
+| Sanket  |    23 | Badlapur         | SSJP                         | Ambernath        |
+| Sanket  |    23 | Badlapur         | Hidden leaf collage of jutsu | Hidden leaf      |
+| Sanket  |    23 | Badlapur         | IIT                          | Mumbai           |
+| Sanket  |    23 | Badlapur         | Datta meghe collage of engg  | Airoli           |
+| Sanket  |    23 | Badlapur         | AC patil                     | kharghar         |
+| Mayur   |    24 | Kalyan           | SSJP                         | Ambernath        |
+| Mayur   |    24 | Kalyan           | Hidden leaf collage of jutsu | Hidden leaf      |
+| Mayur   |    24 | Kalyan           | IIT                          | Mumbai           |
+| Mayur   |    24 | Kalyan           | Datta meghe collage of engg  | Airoli           |
+| Mayur   |    24 | Kalyan           | AC patil                     | kharghar         |
+| Pritii  |    20 | Ambernath        | SSJP                         | Ambernath        |
+| Pritii  |    20 | Ambernath        | Hidden leaf collage of jutsu | Hidden leaf      |
+| Pritii  |    20 | Ambernath        | IIT                          | Mumbai           |
+| Pritii  |    20 | Ambernath        | Datta meghe collage of engg  | Airoli           |
+| Pritii  |    20 | Ambernath        | AC patil                     | kharghar         |
+| Ram     |    21 | Badlapur         | SSJP                         | Ambernath        |
+| Ram     |    21 | Badlapur         | Hidden leaf collage of jutsu | Hidden leaf      |
+| Ram     |    21 | Badlapur         | IIT                          | Mumbai           |
+| Ram     |    21 | Badlapur         | Datta meghe collage of engg  | Airoli           |
+| Ram     |    21 | Badlapur         | AC patil                     | kharghar         |
+| Shankar |    80 | Heal             | SSJP                         | Ambernath        |
+| Shankar |    80 | Heal             | Hidden leaf collage of jutsu | Hidden leaf      |
+| Shankar |    80 | Heal             | IIT                          | Mumbai           |
+| Shankar |    80 | Heal             | Datta meghe collage of engg  | Airoli           |
+| Shankar |    80 | Heal             | AC patil                     | kharghar         |
+| Pintya  |    26 | Bhivandi         | SSJP                         | Ambernath        |
+| Pintya  |    26 | Bhivandi         | Hidden leaf collage of jutsu | Hidden leaf      |
+| Pintya  |    26 | Bhivandi         | IIT                          | Mumbai           |
+| Pintya  |    26 | Bhivandi         | Datta meghe collage of engg  | Airoli           |
+| Pintya  |    26 | Bhivandi         | AC patil                     | kharghar         |
++---------+-------+------------------+------------------------------+------------------+
+45 rows in set (0.00 sec)
+
+mysql> select * from student inner join collage on student_id =  collage.id ;
+ERROR 1054 (42S22): Unknown column 'student_id' in 'on clause'
+mysql> select * from student natural join collage on student_id =  collage.id ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on student_id =  collage.id' at line 1
+mysql>
+mysql>
+mysql> select * from student natural join collage ;
++------+---------+-------+-------------+------------+----+------------------------------+-------------+
+| s_id | s_name  | s_age | s_city      | collage_id | id | name                         | location    |
++------+---------+-------+-------------+------------+----+------------------------------+-------------+
+|    1 | Krushna |    23 | Ambernath   |          1 |  5 | SSJP                         | Ambernath   |
+|    1 | Krushna |    23 | Ambernath   |          1 |  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|    1 | Krushna |    23 | Ambernath   |          1 |  3 | IIT                          | Mumbai      |
+|    1 | Krushna |    23 | Ambernath   |          1 |  2 | Datta meghe collage of engg  | Airoli      |
+|    1 | Krushna |    23 | Ambernath   |          1 |  1 | AC patil                     | kharghar    |
+|    2 | Rajith  |    25 | Kalyan      |          4 |  5 | SSJP                         | Ambernath   |
+|    2 | Rajith  |    25 | Kalyan      |          4 |  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|    2 | Rajith  |    25 | Kalyan      |          4 |  3 | IIT                          | Mumbai      |
+|    2 | Rajith  |    25 | Kalyan      |          4 |  2 | Datta meghe collage of engg  | Airoli      |
+|    2 | Rajith  |    25 | Kalyan      |          4 |  1 | AC patil                     | kharghar    |
+|    3 | Naruto  |    19 | Hidden leaf |          4 |  5 | SSJP                         | Ambernath   |
+|    3 | Naruto  |    19 | Hidden leaf |          4 |  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|    3 | Naruto  |    19 | Hidden leaf |          4 |  3 | IIT                          | Mumbai      |
+|    3 | Naruto  |    19 | Hidden leaf |          4 |  2 | Datta meghe collage of engg  | Airoli      |
+|    3 | Naruto  |    19 | Hidden leaf |          4 |  1 | AC patil                     | kharghar    |
+|    4 | Sanket  |    23 | Badlapur    |       NULL |  5 | SSJP                         | Ambernath   |
+|    4 | Sanket  |    23 | Badlapur    |       NULL |  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|    4 | Sanket  |    23 | Badlapur    |       NULL |  3 | IIT                          | Mumbai      |
+|    4 | Sanket  |    23 | Badlapur    |       NULL |  2 | Datta meghe collage of engg  | Airoli      |
+|    4 | Sanket  |    23 | Badlapur    |       NULL |  1 | AC patil                     | kharghar    |
+|    5 | Mayur   |    24 | Kalyan      |       NULL |  5 | SSJP                         | Ambernath   |
+|    5 | Mayur   |    24 | Kalyan      |       NULL |  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|    5 | Mayur   |    24 | Kalyan      |       NULL |  3 | IIT                          | Mumbai      |
+|    5 | Mayur   |    24 | Kalyan      |       NULL |  2 | Datta meghe collage of engg  | Airoli      |
+|    5 | Mayur   |    24 | Kalyan      |       NULL |  1 | AC patil                     | kharghar    |
+|    6 | Pritii  |    20 | Ambernath   |          5 |  5 | SSJP                         | Ambernath   |
+|    6 | Pritii  |    20 | Ambernath   |          5 |  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|    6 | Pritii  |    20 | Ambernath   |          5 |  3 | IIT                          | Mumbai      |
+|    6 | Pritii  |    20 | Ambernath   |          5 |  2 | Datta meghe collage of engg  | Airoli      |
+|    6 | Pritii  |    20 | Ambernath   |          5 |  1 | AC patil                     | kharghar    |
+|    7 | Ram     |    21 | Badlapur    |          2 |  5 | SSJP                         | Ambernath   |
+|    7 | Ram     |    21 | Badlapur    |          2 |  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|    7 | Ram     |    21 | Badlapur    |          2 |  3 | IIT                          | Mumbai      |
+|    7 | Ram     |    21 | Badlapur    |          2 |  2 | Datta meghe collage of engg  | Airoli      |
+|    7 | Ram     |    21 | Badlapur    |          2 |  1 | AC patil                     | kharghar    |
+|    8 | Shankar |    80 | Heal        |          3 |  5 | SSJP                         | Ambernath   |
+|    8 | Shankar |    80 | Heal        |          3 |  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|    8 | Shankar |    80 | Heal        |          3 |  3 | IIT                          | Mumbai      |
+|    8 | Shankar |    80 | Heal        |          3 |  2 | Datta meghe collage of engg  | Airoli      |
+|    8 | Shankar |    80 | Heal        |          3 |  1 | AC patil                     | kharghar    |
+|    9 | Pintya  |    26 | Bhivandi    |          3 |  5 | SSJP                         | Ambernath   |
+|    9 | Pintya  |    26 | Bhivandi    |          3 |  4 | Hidden leaf collage of jutsu | Hidden leaf |
+|    9 | Pintya  |    26 | Bhivandi    |          3 |  3 | IIT                          | Mumbai      |
+|    9 | Pintya  |    26 | Bhivandi    |          3 |  2 | Datta meghe collage of engg  | Airoli      |
+|    9 | Pintya  |    26 | Bhivandi    |          3 |  1 | AC patil                     | kharghar    |
++------+---------+-------+-------------+------------+----+------------------------------+-------------+
+45 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> ^A
