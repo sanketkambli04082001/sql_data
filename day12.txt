@@ -1,0 +1,340 @@
+Microsoft Windows [Version 10.0.19045.4170]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\xampp\mysql\bin>mysql -u root -p  -h localhoat
+Enter password: ****
+ERROR 2005 (HY000): Unknown MySQL server host 'localhoat' (11001)
+
+C:\xampp\mysql\bin>create databases emp ;
+'create' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\xampp\mysql\bin>mysql -u root -p  -h localhost
+Enter password: ****
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 9
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create databases kj;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'databases kj' at line 1
+MariaDB [(none)]> create database kj;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> use kj;
+Database changed
+MariaDB [kj]> create table collage(cid int primary key auto_increment ,c_name varchar(20) not null ,C_location varchar(20) not null );
+Query OK, 0 rows affected (0.006 sec)
+
+MariaDB [kj]> create table student(sid int primary key auto_increment ,s_name varchar(20) not null , s_age int not null ,s-city varchar(20), cid int , foreign key(cid) references collage(cid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-city varchar(20), cid int , foreign key(cid) references collage(cid))' at line 1
+MariaDB [kj]> create table student(sid int primary key auto_increment ,s_name varchar(20) not null , s_age int not null ,s_city varchar(20), cid int , foreign key(cid) references collage(cid));
+Query OK, 0 rows affected (0.023 sec)
+
+MariaDB [kj]> insert into collage(c_name,clocation) values('ssjp','amb'),('abc','bad'),('IIT','mumbai'),('MIT','akjksj') ;
+ERROR 1054 (42S22): Unknown column 'clocation' in 'field list'
+MariaDB [kj]>
+MariaDB [kj]>
+MariaDB [kj]>
+MariaDB [kj]> insert into collage(c_name,c_location) values('ssjp','amb'),('abc','bad'),('IIT','mumbai'),('MIT','akjksj') ;
+Query OK, 4 rows affected (0.004 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [kj]> insert into student (s_name,s_age,s_city,cid) values ('krush',22,'amb',4),('sanketh',02,'bad',1),('rajith',22,'dom',2),('mayur',22,'kalyan',3),('harshit',12,'kalva',1);
+Query OK, 5 rows affected (0.005 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [kj]> select * from student ;
++-----+---------+-------+--------+------+
+| sid | s_name  | s_age | s_city | cid  |
++-----+---------+-------+--------+------+
+|   1 | krush   |    22 | amb    |    4 |
+|   2 | sanketh |     2 | bad    |    1 |
+|   3 | rajith  |    22 | dom    |    2 |
+|   4 | mayur   |    22 | kalyan |    3 |
+|   5 | harshit |    12 | kalva  |    1 |
++-----+---------+-------+--------+------+
+5 rows in set (0.000 sec)
+
+MariaDB [kj]> insert into student (s_name,s_age,s_city,cid) values ('krushhna',22,'amb',null),('hk',22,'amb',4);
+Query OK, 2 rows affected (0.003 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [kj]> select * from student ;
++-----+----------+-------+--------+------+
+| sid | s_name   | s_age | s_city | cid  |
++-----+----------+-------+--------+------+
+|   1 | krush    |    22 | amb    |    4 |
+|   2 | sanketh  |     2 | bad    |    1 |
+|   3 | rajith   |    22 | dom    |    2 |
+|   4 | mayur    |    22 | kalyan |    3 |
+|   5 | harshit  |    12 | kalva  |    1 |
+|   6 | krushhna |    22 | amb    | NULL |
+|   7 | hk       |    22 | amb    |    4 |
++-----+----------+-------+--------+------+
+7 rows in set (0.000 sec)
+
+MariaDB [kj]> select * from collagge left join student on student_sid = collage_cid;
+ERROR 1146 (42S02): Table 'kj.collagge' doesn't exist
+MariaDB [kj]>
+MariaDB [kj]>
+MariaDB [kj]>
+MariaDB [kj]> select * from collage left join student on student_sid = collage_cid;
+ERROR 1054 (42S22): Unknown column 'student_sid' in 'on clause'
+MariaDB [kj]>
+MariaDB [kj]>
+MariaDB [kj]> select * from collage left join student on student.sid = collage.cid;
++-----+--------+------------+------+---------+-------+--------+------+
+| cid | c_name | C_location | sid  | s_name  | s_age | s_city | cid  |
++-----+--------+------------+------+---------+-------+--------+------+
+|   1 | ssjp   | amb        |    1 | krush   |    22 | amb    |    4 |
+|   2 | abc    | bad        |    2 | sanketh |     2 | bad    |    1 |
+|   3 | IIT    | mumbai     |    3 | rajith  |    22 | dom    |    2 |
+|   4 | MIT    | akjksj     |    4 | mayur   |    22 | kalyan |    3 |
++-----+--------+------------+------+---------+-------+--------+------+
+4 rows in set (0.000 sec)
+
+MariaDB [kj]> select * from collage right join student on student.sid = collage.cid;
++------+--------+------------+-----+----------+-------+--------+------+
+| cid  | c_name | C_location | sid | s_name   | s_age | s_city | cid  |
++------+--------+------------+-----+----------+-------+--------+------+
+|    1 | ssjp   | amb        |   1 | krush    |    22 | amb    |    4 |
+|    2 | abc    | bad        |   2 | sanketh  |     2 | bad    |    1 |
+|    3 | IIT    | mumbai     |   3 | rajith   |    22 | dom    |    2 |
+|    4 | MIT    | akjksj     |   4 | mayur    |    22 | kalyan |    3 |
+| NULL | NULL   | NULL       |   5 | harshit  |    12 | kalva  |    1 |
+| NULL | NULL   | NULL       |   6 | krushhna |    22 | amb    | NULL |
+| NULL | NULL   | NULL       |   7 | hk       |    22 | amb    |    4 |
++------+--------+------------+-----+----------+-------+--------+------+
+7 rows in set (0.000 sec)
+
+MariaDB [kj]> select * from collage left join student on student.sid = collage.cid union
+    -> select * from collage right join student on student.sid = collage.cid;
++------+--------+------------+------+----------+-------+--------+------+
+| cid  | c_name | C_location | sid  | s_name   | s_age | s_city | cid  |
++------+--------+------------+------+----------+-------+--------+------+
+|    1 | ssjp   | amb        |    1 | krush    |    22 | amb    |    4 |
+|    2 | abc    | bad        |    2 | sanketh  |     2 | bad    |    1 |
+|    3 | IIT    | mumbai     |    3 | rajith   |    22 | dom    |    2 |
+|    4 | MIT    | akjksj     |    4 | mayur    |    22 | kalyan |    3 |
+| NULL | NULL   | NULL       |    5 | harshit  |    12 | kalva  |    1 |
+| NULL | NULL   | NULL       |    6 | krushhna |    22 | amb    | NULL |
+| NULL | NULL   | NULL       |    7 | hk       |    22 | amb    |    4 |
++------+--------+------------+------+----------+-------+--------+------+
+7 rows in set (0.001 sec)
+
+MariaDB [kj]>
+MariaDB [kj]>
+MariaDB [kj]> select * from collage left join student on student.sid = collage.cid union all
+    -> select * from collage right join student on student.sid = collage.cid;
++------+--------+------------+------+----------+-------+--------+------+
+| cid  | c_name | C_location | sid  | s_name   | s_age | s_city | cid  |
++------+--------+------------+------+----------+-------+--------+------+
+|    1 | ssjp   | amb        |    1 | krush    |    22 | amb    |    4 |
+|    2 | abc    | bad        |    2 | sanketh  |     2 | bad    |    1 |
+|    3 | IIT    | mumbai     |    3 | rajith   |    22 | dom    |    2 |
+|    4 | MIT    | akjksj     |    4 | mayur    |    22 | kalyan |    3 |
+|    1 | ssjp   | amb        |    1 | krush    |    22 | amb    |    4 |
+|    2 | abc    | bad        |    2 | sanketh  |     2 | bad    |    1 |
+|    3 | IIT    | mumbai     |    3 | rajith   |    22 | dom    |    2 |
+|    4 | MIT    | akjksj     |    4 | mayur    |    22 | kalyan |    3 |
+| NULL | NULL   | NULL       |    5 | harshit  |    12 | kalva  |    1 |
+| NULL | NULL   | NULL       |    6 | krushhna |    22 | amb    | NULL |
+| NULL | NULL   | NULL       |    7 | hk       |    22 | amb    |    4 |
++------+--------+------------+------+----------+-------+--------+------+
+11 rows in set (0.000 sec)
+
+MariaDB [kj]> wringg data given by uniomn all                Ctrl-C -- exit!
+Bye
+
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>create table emp (id int primary key ,ename varchar(20) not null , designation varchar(20) not null ,mid int );
+'create' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>create table emp (id int primary key ,ename varchar(20) not null , designation varchar(20) not null ,mid int );
+'create' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\xampp\mysql\bin>create table emp (id int primary key ,ename varchar(20) not null , designation varchar(20) not null ,mid int );
+'create' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\xampp\mysql\bin>show tables;
+'show' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 10
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create table emp (id int primary key ,ename varchar(20) not null , designation varchar(20) not null ,mid int );
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> use kj ;
+Database changed
+MariaDB [kj]>
+MariaDB [kj]> create table emp (id int primary key ,ename varchar(20) not null , designation varchar(20) not null ,mid int );
+Query OK, 0 rows affected (0.008 sec)
+
+MariaDB [kj]> insert into emp(id,ename,designation,mid) values (1,'krushna','CEO',0),(2,'sanket','manager',1),(3,'Rajith','HR',1),(4,'Mayur','dev',3),(5,'Luffy','Teter',3);)
+Query OK, 5 rows affected (0.004 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+    -> Ctrl-C -- exit!
+Bye
+
+C:\xampp\mysql\bin>
+C:\xampp\mysql\bin>insert into emp(id,ename,designation,mid) values (1,'krushna','CEO',0),(2,'sanket','manager',1),(3,'Rajith','HR',1),(4,'Mayur','dev',3),(5,'Luffy','Teter',3);
+'insert' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 11
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> insert into emp(id,ename,designation,mid) values (1,'krushna','CEO',0),(2,'sanket','manager',1),(3,'Rajith','HR',1),(4,'Mayur','dev',3),(5,'Luffy','Teter',3);
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> insert into emp(id,ename,designation,mid) values (1,'krushna','CEO',0),(2,'sanket','manager',1),(3,'Rajith','HR',1),(4,'Mayur','dev',3),(5,'Luffy','Teter',3);
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]>
+MariaDB [(none)]> use kj ;
+Database changed
+MariaDB [kj]> insert into emp(id,ename,designation,mid) values (1,'krushna','CEO',0),(2,'sanket','manager',1),(3,'Rajith','HR',1),(4,'Mayur','dev',3),(5,'Luffy','Teter',3);
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [kj]> alter table emp drop index id ;
+ERROR 1091 (42000): Can't DROP INDEX `id`; check that it exists
+MariaDB [kj]> alter table emp drop primary key ;
+Query OK, 5 rows affected (0.022 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [kj]> insert into emp(id,ename,designation,mid) values (1,'krushna','CEO',0),(2,'sanket','manager',1),(3,'Rajith','HR',1),(4,'Mayur','dev',3),(5,'Luffy','Teter',3);
+Query OK, 5 rows affected (0.004 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [kj]> select * from emp;
++----+---------+-------------+------+
+| id | ename   | designation | mid  |
++----+---------+-------------+------+
+|  1 | krushna | CEO         |    0 |
+|  2 | sanket  | manager     |    1 |
+|  3 | Rajith  | HR          |    1 |
+|  4 | Mayur   | dev         |    3 |
+|  5 | Luffy   | Teter       |    3 |
+|  1 | krushna | CEO         |    0 |
+|  2 | sanket  | manager     |    1 |
+|  3 | Rajith  | HR          |    1 |
+|  4 | Mayur   | dev         |    3 |
+|  5 | Luffy   | Teter       |    3 |
++----+---------+-------------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [kj]> select * from emp;
++----+---------+-------------+------+
+| id | ename   | designation | mid  |
++----+---------+-------------+------+
+|  1 | krushna | CEO         |    0 |
+|  2 | sanket  | manager     |    1 |
+|  3 | Rajith  | HR          |    1 |
+|  4 | Mayur   | dev         |    3 |
+|  5 | Luffy   | Teter       |    3 |
+|  1 | krushna | CEO         |    0 |
+|  2 | sanket  | manager     |    1 |
+|  3 | Rajith  | HR          |    1 |
+|  4 | Mayur   | dev         |    3 |
+|  5 | Luffy   | Teter       |    3 |
++----+---------+-------------+------+
+10 rows in set (0.000 sec)
+
+MariaDB [kj]> truncate emp;
+Query OK, 0 rows affected (0.016 sec)
+
+MariaDB [kj]> insert into emp(id,ename,designation,mid) values (1,'krushna','CEO',0),(2,'sanket','manager',1),(3,'Rajith','HR',1),(4,'Mayur','dev',3),(5,'Luffy','Teter',3);
+Query OK, 5 rows affected (0.003 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [kj]> select * from emp;
++----+---------+-------------+------+
+| id | ename   | designation | mid  |
++----+---------+-------------+------+
+|  1 | krushna | CEO         |    0 |
+|  2 | sanket  | manager     |    1 |
+|  3 | Rajith  | HR          |    1 |
+|  4 | Mayur   | dev         |    3 |
+|  5 | Luffy   | Teter       |    3 |
++----+---------+-------------+------+
+5 rows in set (0.000 sec)
+
+MariaDB [kj]> select e2.ename ,e2.designation,e1.ename,e1.designation from emp e1 inner join emp e2 on e1.id = e2.mid ;
++--------+-------------+---------+-------------+
+| ename  | designation | ename   | designation |
++--------+-------------+---------+-------------+
+| sanket | manager     | krushna | CEO         |
+| Rajith | HR          | krushna | CEO         |
+| Mayur  | dev         | Rajith  | HR          |
+| Luffy  | Teter       | Rajith  | HR          |
++--------+-------------+---------+-------------+
+4 rows in set (0.001 sec)
+
+MariaDB [kj]> select e2.ename ,e2.designation,e1.ename as manager_name,e1.designation from emp e1 inner join emp e2 on e1.id = e2.mid ;
++--------+-------------+--------------+-------------+
+| ename  | designation | manager_name | designation |
++--------+-------------+--------------+-------------+
+| sanket | manager     | krushna      | CEO         |
+| Rajith | HR          | krushna      | CEO         |
+| Mayur  | dev         | Rajith       | HR          |
+| Luffy  | Teter       | Rajith       | HR          |
++--------+-------------+--------------+-------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kj]>
+MariaDB [kj]> select e2.ename ,e2.designation,e1.ename as manager_name,e1.designation from emp e1 ,emp e2 where e1.id = e2.mid ;
++--------+-------------+--------------+-------------+
+| ename  | designation | manager_name | designation |
++--------+-------------+--------------+-------------+
+| sanket | manager     | krushna      | CEO         |
+| Rajith | HR          | krushna      | CEO         |
+| Mayur  | dev         | Rajith       | HR          |
+| Luffy  | Teter       | Rajith       | HR          |
++--------+-------------+--------------+-------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kj]> select e.name ,m.name,e.designation ,m.designation manager_name from emp e inner join emp m on e.mid = m.id ;
+ERROR 1054 (42S22): Unknown column 'e.name' in 'field list'
+MariaDB [kj]> select e.ename ,m.ename,e.designation ,m.designation manager_name from emp e inner join emp m on e.mid = m.id ;
++--------+---------+-------------+--------------+
+| ename  | ename   | designation | manager_name |
++--------+---------+-------------+--------------+
+| sanket | krushna | manager     | CEO          |
+| Rajith | krushna | HR          | CEO          |
+| Mayur  | Rajith  | dev         | HR           |
+| Luffy  | Rajith  | Teter       | HR           |
++--------+---------+-------------+--------------+
+4 rows in set (0.000 sec)
+
+MariaDB [kj]>
