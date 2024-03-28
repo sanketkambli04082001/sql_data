@@ -1,0 +1,20 @@
+use kj45;
+show tables;
+desc student_data ;
+select * from student_data;
+
+select * from student_data where marks = (select max(marks) from student_data where marks < (select max(marks) from student_data)  );
+
+select * from student_data where marks = (select max(marks) from student_data where marks < (select max(marks) from student_data));
+
+select * from  student_data where attendance in (select marks from student_data where marks >= 90); 
+
+select id from student_data where id > any (select id from student_data where id in (1,2,3));
+select id from student_data where id  < any (select id from student_data where id in (1,2,3));
+
+select id from student_data where id > all (select id from student_data where id in (1,2,3));
+select id from student_data where id < all (select id from student_data where id in (1,2,3));
+
+select id from student_data where id > some (select id from student_data where id in .(1,2,3));
+
+select att as krushnapagal from (select attendance as att from student_data)x ;
